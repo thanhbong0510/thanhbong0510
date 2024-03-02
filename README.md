@@ -14,6 +14,3 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
-docker build -t dev-reward-script .
-docker run -it --network none -v ~/.ssh:/root/.ssh:ro dev-reward-script
-docker run -it --network none -v /{dir_path_for_your_ssh_keys}:/root/.ssh:ro dev-reward-script
