@@ -15,6 +15,7 @@ import argparse
 import asyncio
 import json
 import math
+import os
 import re
 import subprocess
 import sys
@@ -22,6 +23,9 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+# Windows can't make the symlinks Hugging Face's cache prefers; the fallback works fine, so hide the noise.
+os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 W, H, FPS = 1920, 1080, 30
 PAD = 0.4  # seconds of breathing room after each line
@@ -79,20 +83,35 @@ def tts_mock(text, out):
 
 # ---------- images ----------
 
-def image_pollinations(prompt, seed, out):
+POLLINATIONS_GAP = 20  # seconds between requests; the anonymous free tier rate-limits bursts
+_last_pollinations = 0.0
+
+
+def image_pollinations(prompt, seed, out, token=""):
+    global _last_pollinations
+    import urllib.error
     url = ("https://image.pollinations.ai/prompt/" + urllib.parse.quote(prompt)
            + f"?width={W}&height={H}&seed={seed}&nologo=true")
-    for attempt in range(4):
+    headers = {"User-Agent": "free-video-maker"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    for wait in (30, 60, 120, 240, None):
+        time.sleep(max(0.0, _last_pollinations + POLLINATIONS_GAP - time.time()))
+        _last_pollinations = time.time()
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "free-video-maker"})
-            with urllib.request.urlopen(req, timeout=180) as resp:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=180) as resp:
                 out.write_bytes(resp.read())
             return
         except Exception as exc:
-            wait = 2 ** (attempt + 1)
-            print(f"    image failed ({exc}), retrying in {wait}s")
+            limited = isinstance(exc, urllib.error.HTTPError) and exc.code in (402, 429)
+            if wait is None:
+                break
+            reason = "rate limited by Pollinations free tier" if limited else str(exc)
+            print(f"    image failed ({reason}), retrying in {wait}s")
             time.sleep(wait)
-    sys.exit(f"Could not download image for: {prompt}")
+    sys.exit("\n[LOI] Pollinations tu choi tao anh (gioi han ban mien phi).\n"
+             "Cach sua: chay lai lenh sau 10-15 phut (anh da tao duoc giu nguyen),\n"
+             "hoac tao anh tren may: them --images sd vao lenh.")
 
 
 _sd = None
@@ -358,7 +377,8 @@ def main():
                 # CLIP reads only ~75 tokens, so the scene goes first and the style after.
                 image_sd(f"{scene['image']}, {project.get('sd_style', style)}", seed, image, project)
             else:
-                image_pollinations(f"{style}, {scene['image']}" if style else scene["image"], seed, image)
+                image_pollinations(f"{style}, {scene['image']}" if style else scene["image"], seed, image,
+                                   project.get("pollinations_token", ""))
 
         durations.append(render_clip(image, audio, scene["motion"], clip, args.mock))
         clips.append(clip)
