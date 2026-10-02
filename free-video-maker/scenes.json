@@ -1,14 +1,24 @@
 {
   "style": "flat 2D vector illustration, vintage American storybook style, muted warm palette of cream, mustard, teal and brick red, subtle paper grain texture, clean outlines, simple expressive characters, cinematic 16:9 composition, no text, no letters",
+  "sd_style": "flat 2D vector illustration, vintage American storybook, muted warm colors, paper grain texture, clean outlines",
+  "negative": "text, letters, words, watermark, signature, logo, blurry, deformed hands, extra fingers, photo, photorealistic, 3d render",
+  "tts": "edge",
   "voice": "en-US-AndrewNeural",
   "rate": "-5%",
   "kokoro_voice": "am_michael",
+  "images": "pollinations",
+  "sd_type": "sdxl",
+  "sd_model": "",
+  "sd_lora": "",
+  "sd_lora_scale": 0.8,
+  "sd_steps": 28,
+  "sd_cfg": 6.5,
   "seed": 1899,
   "scenes": [
     {
       "text": "In 1899, a man walked into the United States Patent Office holding a tiny piece of bent wire.",
       "image": "a man in a 1890s suit and bowler hat entering a grand Victorian patent office lobby, holding up a small paperclip, sunlight through tall windows",
-      "motion": "zoom_in"
+      "motion": "parallax_in"
     },
     {
       "text": "Today, Americans buy billions of them every year. They sit on almost every desk in the country.",
@@ -18,7 +28,7 @@
     {
       "text": "But here's the twist. The man with the patent never invented the paperclip at all.",
       "image": "close-up of a surprised 1890s clerk holding a magnifying glass over an old patent drawing, dramatic shadows",
-      "motion": "zoom_out"
+      "motion": "parallax_left"
     }
   ]
 }

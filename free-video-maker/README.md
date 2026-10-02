@@ -1,95 +1,125 @@
 # Free Video Maker: làm video hoạt hình 2D vi lịch sử, 100% miễn phí
 
-Không cần ElevenLabs Pro hay Canva Pro. Bạn viết kịch bản vào `scenes.json`, chạy 1 lệnh là ra file MP4 1080p gồm:
+Bạn viết kịch bản vào `scenes.json`, chạy 1 lệnh là ra file MP4 1080p gồm:
 
-- 🎙️ **Giọng đọc Mỹ tự nhiên**: Microsoft Edge TTS (miễn phí, không cần key) hoặc Kokoro (mã nguồn mở)
-- 🎨 **Hình 2D cùng một phong cách** cho mọi cảnh: Pollinations.ai (miễn phí, không cần key)
-- 🎬 **Chuyển động**: zoom/pan mượt kiểu Ken Burns, chuyển cảnh mờ dần
-- 💬 **Phụ đề** tự khớp với giọng đọc, có thể thêm **nhạc nền** tuỳ chọn
+- 🎙️ **Giọng đọc Mỹ tự nhiên**: Kokoro (chạy trên máy, được dùng thương mại) hoặc Edge TTS
+- 🎨 **Hình 2D cùng một phong cách** cho mọi cảnh: Stable Diffusion chạy trên máy (không giới hạn) hoặc Pollinations.ai (online)
+- 🎬 **Chuyển động**: hiệu ứng **2.5D** (camera lượn, vật gần di chuyển nhiều hơn vật xa) và zoom/pan kiểu Ken Burns
+- 💬 **Phụ đề** tự khớp với giọng đọc, có thể thêm **nhạc nền**
+
+Đã điều chỉnh cho máy **Windows 10, GTX 1070 8GB, RAM 64GB**.
 
 ## Cài đặt (1 lần)
 
-1. Cài **Python 3.10+**: https://www.python.org/downloads/ (Windows: tích ô "Add Python to PATH")
-2. Cài **ffmpeg**:
-   - Windows: `winget install ffmpeg`
-   - Mac: `brew install ffmpeg`
-3. Cài thư viện giọng đọc:
-   ```
-   pip install edge-tts
-   ```
+1. Cập nhật **driver NVIDIA** mới nhất: https://www.nvidia.com/Download/index.aspx
+2. Cài **Python 3.11**: https://www.python.org/downloads/release/python-3119/. Khi cài, **tích ô "Add Python to PATH"**.
+3. Nháy đúp **`install_windows.bat`**. Script tự cài ffmpeg, PyTorch (bản hợp với GTX 1070) và các thư viện. Mất khoảng 10–20 phút.
+4. Nếu dòng cuối hiện `GPU OK: NVIDIA GeForce GTX 1070` là xong.
+5. (Khuyên dùng, cho giọng Kokoro) Cài **espeak-ng**: tải file `.msi` tại https://github.com/espeak-ng/espeak-ng/releases
 
 ## Chạy
 
+Mở cửa sổ lệnh (cmd) trong thư mục `free-video-maker`:
+
 ```
-cd free-video-maker
-python make_video.py scenes.json --out paperclip.mp4
+run.bat scenes.json --out paperclip.mp4
 ```
 
-Thêm nhạc nền (tải nhạc miễn phí từ YouTube Audio Library hoặc Pixabay Music):
-```
-python make_video.py scenes.json --music nhac.mp3 --out paperclip.mp4
-```
+| Lệnh | Tác dụng |
+|---|---|
+| `run.bat scenes.json --tts kokoro --images sd` | **Chạy hoàn toàn trên máy**: không giới hạn, không phụ thuộc dịch vụ nào |
+| `run.bat scenes.json --music nhac.mp3` | Thêm nhạc nền (tải từ YouTube Audio Library / Pixabay Music) |
+| `run.bat scenes.json --no-subs` | Không chèn phụ đề vào hình (tự tải file `work/subs.srt` lên YouTube) |
+| `run.bat scenes.json --mock` | Chạy thử không cần mạng/GPU để kiểm tra cài đặt |
 
-Chạy thử không cần mạng (ảnh giả, không có tiếng) để kiểm tra máy đã cài đủ chưa:
-```
-python make_video.py scenes.json --mock
-```
+Lần đầu dùng `--images sd`, máy sẽ tải model Stable Diffusion (khoảng 7GB).
+
+### Thời gian ước tính trên GTX 1070 (ước lượng, chưa đo trên máy bạn)
+
+| Việc | Thời gian |
+|---|---|
+| SDXL (`"sd_type": "sdxl"`) | ~2–4 phút/ảnh, video 70 cảnh ≈ 3–4 tiếng → **để chạy qua đêm** |
+| SD 1.5 (`"sd_type": "sd15"`) | ~20–40 giây/ảnh, nhanh hơn nhiều nhưng ảnh kém đẹp hơn |
+| Giọng Kokoro trên CPU Xeon | Nhanh hơn thời gian thực |
+| Hiệu ứng 2.5D + ghép video | ~1–2 phút cho 1 phút video |
+
+Ảnh và giọng đã tạo được lưu trong `work/`. Nếu bị dừng giữa chừng, chạy lại sẽ **làm tiếp từ chỗ dừng**.
 
 ## Viết kịch bản trong `scenes.json`
 
 ```json
 {
-  "style": "flat 2D vector illustration, vintage American storybook style, ...",
-  "voice": "en-US-AndrewNeural",
+  "style": "phong cách ảnh (dùng cho Pollinations)",
+  "sd_style": "phong cách ảnh ngắn gọn (dùng cho Stable Diffusion)",
+  "tts": "kokoro",
+  "images": "sd",
   "scenes": [
-    { "text": "Lời đọc tiếng Anh", "image": "mô tả hình bằng tiếng Anh", "motion": "zoom_in" },
-    { "text": "...", "image_file": "anh_tu_library_of_congress.jpg", "motion": "pan_right" }
+    { "text": "Lời đọc tiếng Anh", "image": "mô tả hình bằng tiếng Anh", "motion": "parallax_in" },
+    { "text": "...", "image_file": "anh_tu_library_of_congress.jpg" }
   ]
 }
 ```
 
 | Trường | Ý nghĩa |
 |---|---|
-| `style` | Phong cách chung, tự gắn vào đầu mọi prompt ảnh nên các cảnh luôn đồng bộ. **Giữ cố định cho cả kênh.** |
-| `voice` | Giọng Edge TTS (xem bảng dưới) |
-| `rate` | Tốc độ đọc, ví dụ `"-5%"` (chậm hơn một chút, hợp kể chuyện) |
-| `seed` | Đổi số này nếu không thích ảnh, chạy lại sẽ ra ảnh khác |
-| `text` | Lời đọc của cảnh. Mỗi cảnh **1–2 câu (5–8 giây)** để hình đổi liên tục |
-| `image` | Mô tả hình của cảnh |
-| `image_file` | Dùng ảnh có sẵn (ví dụ ảnh public domain từ Library of Congress) thay cho ảnh AI |
-| `motion` | `zoom_in`, `zoom_out`, `pan_left`, `pan_right`, `pan_up`, `pan_down` |
+| `style` / `sd_style` | Phong cách chung gắn vào mọi prompt ảnh. **Giữ cố định cho cả kênh.** `sd_style` nên ngắn (dưới ~40 từ) vì Stable Diffusion chỉ đọc được khoảng 75 từ khoá |
+| `negative` | Những thứ không muốn xuất hiện trong ảnh |
+| `tts` | `kokoro` hoặc `edge` |
+| `voice` / `kokoro_voice` | Giọng đọc (xem bảng dưới) |
+| `rate` | Tốc độ Edge TTS, ví dụ `"-5%"` |
+| `images` | `sd` (trên máy) hoặc `pollinations` (online) |
+| `sd_type` | `sdxl` (đẹp, chậm) hoặc `sd15` (nhanh) |
+| `sd_model` | Để trống thì dùng model gốc. Hoặc điền đường dẫn file `.safetensors` tải từ Civitai |
+| `sd_lora`, `sd_lora_scale` | Đường dẫn file LoRA phong cách 2D, độ mạnh từ 0.6 đến 1.0 |
+| `sd_steps`, `sd_cfg` | Số bước (20–30) và độ bám prompt (5–8) |
+| `seed` | Đổi số này để ra bộ ảnh khác |
+| `text` | Lời đọc của cảnh. Mỗi cảnh **1–2 câu (5–8 giây)** |
+| `image` | Mô tả hình |
+| `image_file` | Dùng ảnh có sẵn (ảnh public domain từ Library of Congress, NARA...). **Rất hợp với hiệu ứng 2.5D** |
+| `motion` | Bỏ trống thì **tự xoay vòng** các kiểu để cảnh nào cũng khác nhau |
 
-**Mẹo:** xen kẽ các kiểu `motion` khác nhau giữa các cảnh để video không bị đơn điệu.
+### Các kiểu chuyển động
 
-## Giọng đọc gợi ý (Edge TTS, giọng Mỹ)
-
-| Giọng | Đặc điểm |
+| `motion` | Hiệu ứng |
 |---|---|
-| `en-US-AndrewNeural` | Nam, ấm, kiểu kể chuyện (mặc định) |
-| `en-US-ChristopherNeural` | Nam, trầm, nghiêm túc kiểu phim tài liệu |
-| `en-US-BrianNeural` | Nam, trẻ, thân thiện |
-| `en-US-AvaNeural` | Nữ, ấm, rõ ràng |
-| `en-US-EmmaNeural` | Nữ, vui tươi |
+| `parallax_in` | 2.5D: camera tiến vào, tiền cảnh phóng to nhanh hơn hậu cảnh |
+| `parallax_left` / `parallax_right` | 2.5D: camera lượn ngang, có chiều sâu |
+| `parallax_up` | 2.5D: camera nâng lên |
+| `zoom_in` / `zoom_out` | Phóng to / thu nhỏ phẳng |
+| `pan_left` / `pan_right` / `pan_up` / `pan_down` | Lia máy phẳng |
 
-Xem toàn bộ giọng: `edge-tts --list-voices`
+Hiệu ứng 2.5D dùng model **Depth Anything V2** để đoán độ xa gần của từng điểm ảnh. Model này tự tải lần đầu (khoảng 100MB).
+
+### Mẹo chọn model ảnh 2D trên Civitai
+- Tìm theo từ khoá: `flat illustration`, `storybook`, `vintage illustration`, `cartoon` và lọc theo **SDXL** hoặc **SD 1.5**.
+- **Kiểm tra giấy phép**: mục "Commercial use" phải cho phép dùng trên ảnh được tạo ra (*generated images*).
+- Tải file `.safetensors`, đặt vào thư mục `models/` rồi điền `"sd_model": "models/ten_file.safetensors"`.
+
+## Giọng đọc gợi ý
+
+| Kokoro (`kokoro_voice`) | Edge TTS (`voice`) | Đặc điểm |
+|---|---|---|
+| `am_michael` | `en-US-AndrewNeural` | Nam, ấm, kể chuyện |
+| `am_fenrir` | `en-US-ChristopherNeural` | Nam, trầm, kiểu phim tài liệu |
+| `af_heart` | `en-US-AvaNeural` | Nữ, ấm, rõ ràng |
+| `af_bella` | `en-US-EmmaNeural` | Nữ, tươi sáng |
 
 ## Sửa một cảnh mà không làm lại cả video
 
-Giọng và ảnh được lưu trong thư mục `work/`. Muốn làm lại cảnh 3 thì xoá `work/scene_002.jpg` (hoặc `.mp3`) rồi chạy lại lệnh. Chỉ cảnh đó được tạo mới.
+Xoá file của cảnh đó trong `work/` (ví dụ cảnh 3 là `scene_002.png` hoặc `scene_002.mp3`) rồi chạy lại. Chỉ cảnh đó được tạo mới.
 
 ## ⚠️ Lưu ý khi bật kiếm tiền YouTube
 
-- **Edge TTS** dùng dịch vụ đọc của trình duyệt Microsoft Edge, không phải sản phẩm thương mại chính thức. Nhiều kênh vẫn dùng nhưng có rủi ro. Khi kênh bắt đầu kiếm tiền, nên chuyển sang **Kokoro** (giấy phép Apache 2.0, dùng thương mại thoải mái, chạy trên máy bạn):
-  ```
-  pip install kokoro soundfile
-  python make_video.py scenes.json --tts kokoro
-  ```
-  (Windows cần cài thêm espeak-ng: https://github.com/espeak-ng/espeak-ng/releases)
-- **Pollinations**: đọc điều khoản tại https://pollinations.ai trước khi kiếm tiền. Ảnh lịch sử từ Library of Congress / NARA (dùng qua `image_file`) là public domain, an toàn nhất.
-- YouTube yêu cầu nội dung có **giá trị riêng**: kịch bản do bạn viết, có nghiên cứu. Đừng chỉ ghép ảnh AI với giọng máy một cách hàng loạt.
+- Dùng **Kokoro** (giấy phép Apache 2.0) thay cho Edge TTS. Edge TTS không phải dịch vụ thương mại chính thức.
+- **SDXL / SD 1.5 gốc**: giấy phép OpenRAIL cho phép dùng thương mại ảnh tạo ra. Model tải từ Civitai thì xem giấy phép của từng model.
+- Ảnh từ Library of Congress / NARA (qua `image_file`) là public domain, an toàn nhất.
+- YouTube yêu cầu nội dung có **giá trị riêng**: kịch bản do bạn nghiên cứu và viết. Không nên làm hàng loạt.
 
-## Nâng cấp thêm (đều miễn phí)
+## Lỗi thường gặp
 
-- **Cảnh cử động thật** (nhân vật đi, nói): đưa ảnh trong `work/` vào **Kling AI** hoặc **Hailuo AI** (có credit miễn phí hằng ngày) để tạo clip 5 giây, rồi ghép vào bằng CapCut.
-- **Chữ động, mốc năm, bản đồ**: **CapCut** (bản miễn phí có keyframe và hiệu ứng chữ).
-- **Hiệu ứng âm thanh**: https://freesound.org, https://pixabay.com/sound-effects/
+| Lỗi | Cách sửa |
+|---|---|
+| `no kernel image is available for execution on the device` | PyTorch bản quá mới không hỗ trợ GTX 1070. Chạy lại `install_windows.bat` |
+| `CUDA out of memory` | Đổi `"sd_type": "sd15"`, hoặc tắt bớt chương trình dùng GPU (trình duyệt, game) |
+| Ảnh SDXL ra màu đen | Đã xử lý sẵn bằng VAE fp16-fix. Nếu vẫn bị, báo lại cho tôi |
+| `'ffmpeg' is not recognized` | Đóng cửa sổ cmd, mở lại sau khi cài |

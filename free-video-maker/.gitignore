@@ -1,2 +1,4 @@
 work/
 *.mp4
+venv/
+models/

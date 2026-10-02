@@ -1,0 +1,11 @@
+edge-tts
+kokoro
+soundfile
+numpy
+opencv-python
+pillow
+diffusers
+transformers
+accelerate
+safetensors
+peft
