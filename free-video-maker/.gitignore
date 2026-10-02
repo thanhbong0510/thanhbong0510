@@ -2,3 +2,4 @@ work/
 *.mp4
 venv/
 models/
+__pycache__/
