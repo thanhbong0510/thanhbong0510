@@ -69,6 +69,8 @@ Lần đầu dùng `--images sd`, máy sẽ tải model Stable Diffusion (khoả
 | `rate` | Tốc độ Edge TTS, ví dụ `"-5%"` |
 | `images` | `sd` (trên máy) hoặc `pollinations` (online) |
 | `sd_type` | `sdxl` (đẹp, chậm) hoặc `sd15` (nhanh) |
+| `sd_fast` | `true` = **chế độ nhanh** (SDXL Lightning 8 bước / LCM cho SD 1.5). Nhanh hơn nhiều lần, chất lượng gần như nhau. Lần đầu tải thêm khoảng 400MB |
+| `sd_size` | Kích thước ảnh tạo ra, ví dụ `[1344, 768]`. Giảm xuống `[1152, 640]` nếu máy báo VRAM gần đầy |
 | `sd_model` | Để trống thì dùng model gốc. Hoặc điền đường dẫn file `.safetensors` tải từ Civitai |
 | `sd_lora`, `sd_lora_scale` | Đường dẫn file LoRA phong cách 2D, độ mạnh từ 0.6 đến 1.0 |
 | `sd_steps`, `sd_cfg` | Số bước (20–30) và độ bám prompt (5–8) |
@@ -76,6 +78,7 @@ Lần đầu dùng `--images sd`, máy sẽ tải model Stable Diffusion (khoả
 | `text` | Lời đọc của cảnh. Mỗi cảnh **1–2 câu (5–8 giây)** |
 | `image` | Mô tả hình |
 | `image_file` | Dùng ảnh có sẵn (ảnh public domain từ Library of Congress, NARA...). **Rất hợp với hiệu ứng 2.5D** |
+| `same_image_as` | Dùng lại ảnh của một cảnh trước, ví dụ `3` là dùng ảnh cảnh 3. Nên đặt kiểu `motion` khác để không bị lặp. **Giảm số ảnh phải tạo** |
 | `motion` | Bỏ trống thì **tự xoay vòng** các kiểu để cảnh nào cũng khác nhau |
 
 ### Các kiểu chuyển động
@@ -120,6 +123,7 @@ Xoá file của cảnh đó trong `work/` (ví dụ cảnh 3 là `scene_002.png`
 | Lỗi | Cách sửa |
 |---|---|
 | `no kernel image is available for execution on the device` | PyTorch bản quá mới không hỗ trợ GTX 1070. Chạy lại `install_windows.bat` |
+| GPU chỉ chạy vài % trong Task Manager, ảnh rất lâu | Trong Task Manager, tab Performance, chọn GPU rồi đổi một ô biểu đồ từ "3D" sang **"Cuda"** mới thấy đúng mức dùng. Xem dòng `peak VRAM` công cụ in ra: nếu gần 8GB thì VRAM bị tràn sang RAM. Đóng trình duyệt/game, bật `"sd_fast": true`, hoặc giảm `"sd_size"` |
 | `CUDA out of memory` | Đổi `"sd_type": "sd15"`, hoặc tắt bớt chương trình dùng GPU (trình duyệt, game) |
 | `Pollinations tu choi tao anh` / `HTTP Error 402` | Bản miễn phí của Pollinations giới hạn số ảnh. Chạy lại sau 10–15 phút (ảnh đã tạo được giữ nguyên), hoặc thêm `--images sd` để tạo ảnh trên máy. Có thể đăng ký miễn phí tại https://auth.pollinations.ai để lấy token, điền vào `"pollinations_token"` trong `scenes.json` để được giới hạn rộng hơn |
 | Ảnh SDXL ra màu đen | Đã xử lý sẵn bằng VAE fp16-fix. Nếu vẫn bị, báo lại cho tôi |
