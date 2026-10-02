@@ -124,18 +124,35 @@ def image_pollinations(prompt, seed, out, token=""):
 
 _sd = None
 
+# Few-step LoRAs: far fewer denoising steps and (for SDXL) no negative-prompt pass.
+FAST_LORA = {
+    "sdxl": {"repo": "ByteDance/SDXL-Lightning", "weight": "sdxl_lightning_8step_lora.safetensors",
+             "steps": 8, "cfg": 0.0},
+    "sd15": {"repo": "latent-consistency/lcm-lora-sdv1-5", "weight": "pytorch_lora_weights.safetensors",
+             "steps": 6, "cfg": 1.5},
+}
+
 
 def load_sd(project):
     import torch
-    from diffusers import AutoencoderKL, StableDiffusionPipeline, StableDiffusionXLPipeline
+    from diffusers import (AutoencoderKL, EulerDiscreteScheduler, LCMScheduler,
+                           StableDiffusionPipeline, StableDiffusionXLPipeline)
 
     sd_type = project.get("sd_type", "sdxl")
+    fast = project.get("sd_fast", False)
     model = project.get("sd_model") or ("stabilityai/stable-diffusion-xl-base-1.0" if sd_type == "sdxl"
                                         else "stable-diffusion-v1-5/stable-diffusion-v1-5")
     cuda = torch.cuda.is_available()
-    if not cuda:
-        print("    WARNING: no CUDA GPU found, Stable Diffusion will be very slow on CPU")
+    if cuda:
+        props = torch.cuda.get_device_properties(0)
+        print(f"    GPU: {props.name}, {props.total_memory / 1024**3:.1f} GB VRAM, torch {torch.__version__}")
+    else:
+        print(f"    [CANH BAO] Khong dung duoc GPU (torch {torch.__version__}). Anh se tao bang CPU, rat cham.\n"
+              "    Hay chay lai install_windows.bat.")
     dtype = torch.float16 if cuda else torch.float32
+    # Pascal cards (GTX 10xx) compute fp16 very slowly. SD 1.5 fits in 8 GB at fp32, so use that there.
+    if cuda and sd_type == "sd15" and torch.cuda.get_device_capability()[0] < 7:
+        dtype = torch.float32
     pipe_cls = StableDiffusionXLPipeline if sd_type == "sdxl" else StableDiffusionPipeline
     extra = {"torch_dtype": dtype}
     if sd_type == "sdxl":
@@ -149,9 +166,23 @@ def load_sd(project):
     else:
         pipe = pipe_cls.from_pretrained(model, use_safetensors=True, **extra)
 
+    adapters, weights = [], []
     if project.get("sd_lora"):
-        pipe.load_lora_weights(project["sd_lora"])
-        pipe.fuse_lora(lora_scale=project.get("sd_lora_scale", 0.8))
+        pipe.load_lora_weights(project["sd_lora"], adapter_name="style")
+        adapters.append("style")
+        weights.append(project.get("sd_lora_scale", 0.8))
+    if fast:
+        cfg = FAST_LORA[sd_type]
+        pipe.load_lora_weights(cfg["repo"], weight_name=cfg["weight"], adapter_name="fast")
+        adapters.append("fast")
+        weights.append(1.0)
+        if sd_type == "sdxl":
+            pipe.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+        else:
+            pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
+    if adapters:
+        pipe.set_adapters(adapters, adapter_weights=weights)
+        pipe.fuse_lora(adapter_names=adapters)
 
     if cuda and sd_type == "sdxl":
         pipe.enable_model_cpu_offload()  # SDXL doesn't fit in 8 GB VRAM; spill to system RAM
@@ -163,7 +194,7 @@ def load_sd(project):
         pipe.vae.enable_tiling()
     elif hasattr(pipe, "enable_vae_tiling"):  # older diffusers
         pipe.enable_vae_tiling()
-    size = (1344, 768) if sd_type == "sdxl" else (912, 512)
+    size = tuple(project.get("sd_size") or ((1344, 768) if sd_type == "sdxl" else (912, 512)))
     return pipe, size
 
 
@@ -174,13 +205,30 @@ def image_sd(prompt, seed, out, project):
         print("    loading Stable Diffusion (first time downloads several GB)...")
         _sd = load_sd(project)
     pipe, (width, height) = _sd
+    if project.get("sd_fast"):
+        fast = FAST_LORA[project.get("sd_type", "sdxl")]
+        steps, cfg = fast["steps"], fast["cfg"]
+    else:
+        steps, cfg = project.get("sd_steps", 28), project.get("sd_cfg", 6.5)
+    started = time.time()
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats()
     image = pipe(prompt=prompt,
-                 negative_prompt=project.get("negative", DEFAULT_NEGATIVE),
+                 negative_prompt=project.get("negative", DEFAULT_NEGATIVE) if cfg > 1 else None,
                  width=width, height=height,
-                 num_inference_steps=project.get("sd_steps", 28),
-                 guidance_scale=project.get("sd_cfg", 6.5),
+                 num_inference_steps=steps,
+                 guidance_scale=cfg,
                  generator=torch.Generator("cpu").manual_seed(seed)).images[0]
     image.save(out)
+    note = ""
+    if torch.cuda.is_available():
+        peak = torch.cuda.max_memory_allocated() / 1024**3
+        total = torch.cuda.get_device_properties(0).total_memory / 1024**3
+        note = f", peak VRAM {peak:.1f}/{total:.1f} GB"
+        if peak > total - 1.2:
+            note += ("\n    [CANH BAO] VRAM gan day: Windows dang day bot sang RAM nen GPU chay cham."
+                     "\n    Dong trinh duyet/game, hoac giam \"sd_size\" (vd [1152, 640]) trong scenes.json.")
+    print(f"    image done in {time.time() - started:.0f}s{note}")
 
 
 def image_mock(index, out):
@@ -361,11 +409,14 @@ def main():
 
     for i, scene in enumerate(scenes):
         scene.setdefault("motion", MOTION_CYCLE[i % len(MOTION_CYCLE)])
+        ref = scene.get("same_image_as")
+        if ref is not None and not (isinstance(ref, int) and 1 <= ref <= i):
+            sys.exit(f"Scene {i + 1}: same_image_as must be the number of an earlier scene (1..{i}).")
         if scene["motion"] not in VALID_MOTIONS:
             sys.exit(f"Scene {i + 1}: unknown motion '{scene['motion']}'. "
                      f"Use one of: {', '.join(sorted(VALID_MOTIONS))}")
 
-    clips, durations = [], []
+    clips, durations, images_used = [], [], []
     for i, scene in enumerate(scenes):
         print(f"[{i + 1}/{len(scenes)}] {scene['motion']:<15} {scene['text'][:55]}")
         audio = work / f"scene_{i:03}.mp3"
@@ -381,7 +432,9 @@ def main():
             else:
                 tts_edge(scene["text"], project.get("voice", DEFAULT_VOICE), project.get("rate", "-5%"), audio)
 
-        if scene.get("image_file"):
+        if scene.get("same_image_as"):
+            image = images_used[scene["same_image_as"] - 1]
+        elif scene.get("image_file"):
             image = base / scene["image_file"]
         elif args.mock:
             image_mock(i, image)
@@ -393,6 +446,7 @@ def main():
                 image_pollinations(f"{style}, {scene['image']}" if style else scene["image"], seed, image,
                                    project.get("pollinations_token", ""))
 
+        images_used.append(image)
         durations.append(render_clip(image, audio, scene["motion"], clip, args.mock))
         clips.append(clip)
 

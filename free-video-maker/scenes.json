@@ -6,8 +6,13 @@
   "voice": "en-US-AndrewNeural",
   "rate": "-5%",
   "kokoro_voice": "am_michael",
-  "images": "pollinations",
+  "images": "sd",
   "sd_type": "sdxl",
+  "sd_fast": true,
+  "sd_size": [
+    1344,
+    768
+  ],
   "sd_model": "",
   "sd_lora": "",
   "sd_lora_scale": 0.8,
