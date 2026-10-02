@@ -149,8 +149,12 @@ def load_sd(project):
         pipe.enable_model_cpu_offload()  # SDXL doesn't fit in 8 GB VRAM; spill to system RAM
     elif cuda:
         pipe.to("cuda")
-    pipe.enable_attention_slicing()
-    pipe.enable_vae_tiling()
+    # Decode the image in tiles to save VRAM. Attention slicing is skipped on purpose: it turns off
+    # PyTorch's memory-efficient attention, which is both faster and lighter.
+    if hasattr(pipe.vae, "enable_tiling"):
+        pipe.vae.enable_tiling()
+    elif hasattr(pipe, "enable_vae_tiling"):  # older diffusers
+        pipe.enable_vae_tiling()
     size = (1344, 768) if sd_type == "sdxl" else (912, 512)
     return pipe, size
 
