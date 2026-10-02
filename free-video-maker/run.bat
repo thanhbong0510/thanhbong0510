@@ -1,6 +1,10 @@
 @echo off
 REM Vi du: run.bat scenes.json --out paperclip.mp4
 cd /d "%~dp0"
-call venv\Scripts\activate.bat
-python make_video.py %*
+if not exist venv\Scripts\python.exe (
+  echo [LOI] Chua cai dat. Hay chay install_windows.bat truoc.
+  pause
+  exit /b 1
+)
+venv\Scripts\python.exe make_video.py %*
 pause
