@@ -121,5 +121,6 @@ Xoá file của cảnh đó trong `work/` (ví dụ cảnh 3 là `scene_002.png`
 |---|---|
 | `no kernel image is available for execution on the device` | PyTorch bản quá mới không hỗ trợ GTX 1070. Chạy lại `install_windows.bat` |
 | `CUDA out of memory` | Đổi `"sd_type": "sd15"`, hoặc tắt bớt chương trình dùng GPU (trình duyệt, game) |
+| `Pollinations tu choi tao anh` / `HTTP Error 402` | Bản miễn phí của Pollinations giới hạn số ảnh. Chạy lại sau 10–15 phút (ảnh đã tạo được giữ nguyên), hoặc thêm `--images sd` để tạo ảnh trên máy. Có thể đăng ký miễn phí tại https://auth.pollinations.ai để lấy token, điền vào `"pollinations_token"` trong `scenes.json` để được giới hạn rộng hơn |
 | Ảnh SDXL ra màu đen | Đã xử lý sẵn bằng VAE fp16-fix. Nếu vẫn bị, báo lại cho tôi |
 | `'ffmpeg' is not recognized` | Đóng cửa sổ cmd, mở lại sau khi cài |
