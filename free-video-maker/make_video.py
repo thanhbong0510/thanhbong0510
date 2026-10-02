@@ -46,6 +46,14 @@ def run(cmd, **kwargs):
     return result.stdout
 
 
+def is_silent(path):
+    """True if an audio file has no real sound (e.g. a placeholder left over from --mock)."""
+    out = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(path), "-af", "volumedetect", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    match = re.search(r"max_volume: (-?[\d.]+|-inf) dB", out)
+    return not match or match.group(1) == "-inf" or float(match.group(1)) < -60
+
+
 def audio_duration(path):
     out = run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                "-of", "default=nw=1:nk=1", str(path)])
@@ -347,7 +355,8 @@ def main():
     style = project.get("style", "")
     scenes = project["scenes"]
     base = args.scenes.parent
-    work = base / "work"
+    # Mock runs get their own folder so their silent placeholder audio never leaks into a real run.
+    work = base / ("work_mock" if args.mock else "work")
     work.mkdir(exist_ok=True)
 
     for i, scene in enumerate(scenes):
@@ -366,7 +375,7 @@ def main():
 
         if args.mock:
             tts_mock(scene["text"], audio)
-        elif not audio.exists():
+        elif not audio.exists() or is_silent(audio):
             if tts == "kokoro":
                 tts_kokoro(scene["text"], project.get("kokoro_voice", DEFAULT_KOKORO_VOICE), audio)
             else:
@@ -415,6 +424,8 @@ def main():
     cmd += ["-shortest", str(args.out)]
     run(cmd)
     print(f"\nDone: {args.out}  ({sum(durations):.1f}s, {len(scenes)} scenes)")
+    if not args.mock and is_silent(args.out):
+        print("\n[CANH BAO] Video khong co tieng. Xoa thu muc 'work' roi chay lai.")
 
 
 if __name__ == "__main__":
