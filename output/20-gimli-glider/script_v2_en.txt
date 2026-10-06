@@ -1,0 +1,111 @@
+[HOOK]
+Have you ever messed up a unit?
+Cups instead of grams. Fahrenheit instead of Celsius.
+Your cake comes out flat. You laugh. You order pizza.
+Now imagine the recipe is for a plane.
+And the cake is sixty-nine people, seven miles in the sky.
+In 1983, a brand-new Boeing 767 ran out of fuel at forty-one thousand feet.
+Not because of a leak.
+Because of one small number, written in the wrong unit.
+
+[MYTH + PROMISE]
+We like to think disasters need a villain.
+Someone careless. Someone lazy. One big, stupid mistake.
+This one didn't have a villain.
+It had a dozen careful people, each doing their job, each trusting the number in front of them.
+And what saved everyone wasn't in any manual.
+It was what two pilots happened to do with their lives outside of work.
+One of those things involved a racetrack full of families.
+
+[CHAPTER 1 - THE NEW PLANE]
+July 23rd, 1983. Air Canada Flight 143, Montreal to Edmonton.
+The plane was a Boeing 767, only a few months old. The latest thing.
+It had glass screens instead of old dials, and it was the first plane in Air Canada's fleet to measure fuel in kilograms.
+Canada was switching to the metric system.
+The rest of the fleet still used pounds.
+That alone wasn't a problem.
+But this plane had a second one.
+Its fuel gauges weren't working.
+A faulty part meant the computer couldn't show how much fuel was in the tanks.
+There was a way around it. The crew could measure the tanks by hand, with a dipstick, like checking the oil in your car, and then do the math.
+So that's what they did.
+Remember that math. It matters.
+
+[CHAPTER 2 - THE NUMBER]
+The fuel was measured in litres.
+To get the weight, the crew multiplied by 1.77.
+That's the number for pounds per litre.
+But the plane needed kilograms.
+The right number was about 0.8.
+Nobody noticed.
+Not the fuelers. Not the mechanics. Not the pilots, who checked the math together.
+Everyone had done this calculation a thousand times, in pounds.
+The result looked like a perfectly normal number.
+The plane needed 22,300 kilograms of fuel to make the trip.
+It had about 22,300 pounds.
+Less than half.
+They even stopped in Ottawa on the way, measured again, and made the exact same mistake again.
+Then they took off for Edmonton.
+The flight computer, fed that number, said they had plenty of fuel.
+And then a warning light came on.
+
+[CHAPTER 3 - SILENCE AT 41,000 FEET]
+Over northern Ontario, the cockpit beeped: low fuel pressure, left side.
+The pilots thought it was a broken pump.
+Then the right side beeped too.
+They turned toward Winnipeg.
+The left engine stopped.
+Then, a few minutes later, the right engine stopped.
+The cockpit filled with a long bong sound that neither pilot had ever heard before.
+Nobody had heard it. It was the alarm for "all engines off," and nobody had expected it to ever be used.
+Then the modern glass screens went dark.
+They ran on power from the engines.
+The pilots were left with a few small backup instruments, the kind you'd find in a much older plane.
+A small propeller dropped out of the plane's belly to give them just enough power to steer.
+Sixty-one passengers and eight crew were now sitting in a giant glider.
+And the 767 manual had no chapter for gliding.
+
+[CHAPTER 4 - THE HOBBY AND THE MEMORY]
+Here's where the luck starts.
+Captain Bob Pearson wasn't just an airline pilot.
+On weekends, he flew gliders. Planes with no engines at all.
+He knew how to read the air. How to stretch a glide.
+First Officer Maurice Quintal did the math on their height and distance.
+They weren't going to make Winnipeg.
+But Quintal remembered something.
+Years earlier, in the Air Force, he had been based at a small airfield nearby. A place called Gimli.
+What he didn't know was that Gimli's old runway had been turned into a racetrack.
+And that day, it was family day.
+Cars. Campers. By many accounts, kids on bicycles near the runway.
+The plane came in too high and too fast.
+So Pearson did something you're not supposed to do in an airliner.
+He turned the controls in opposite directions and flew the jet sideways, a glider pilot's trick, to dump height fast.
+The passengers looked out their windows at the ground, tilted at a strange angle.
+Then the landing gear dropped. The nose wheel didn't lock.
+
+[CHAPTER 5 - THE LANDING]
+The 767 hit the runway.
+Pearson stood on the brakes so hard that tires blew out.
+The nose wheel folded, and the plane's nose scraped along the concrete, throwing sparks.
+That scraping slowed it down even faster.
+It stopped, by many accounts, a few hundred feet from the people on the track.
+A small fire started in the nose.
+People from the race day ran over with handheld fire extinguishers and helped put it out.
+Everyone got off. A few people were hurt on the emergency slides. Nobody died.
+And afterwards?
+At first, the pilots were blamed. Pearson was demoted for six months. Quintal was suspended for two weeks.
+Later, the investigation pointed at the system instead: the confusing switch to metric, the broken gauge, the unclear rules about who checks the fuel.
+The two pilots received an international award for outstanding airmanship.
+And the plane? It was repaired and flew for another twenty-five years.
+People called it the Gimli Glider.
+
+[ENDING]
+So think back to that ruined cake.
+The wrong unit. The flat sponge. The pizza.
+In 1983, the same kind of mistake was made by careful people who checked their work.
+It wasn't caught by any rule or any computer.
+It was saved by a man who spent his weekends flying planes with no engines,
+and another who remembered an old runway from a job years before.
+Sometimes the most important skill you have isn't the one on your résumé.
+So here's my question:
+who should take the blame for Flight 143 — the people who did the math, or the system that let one number go unchecked?

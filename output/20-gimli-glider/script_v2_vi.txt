@@ -1,0 +1,111 @@
+[MỞ ĐẦU]
+Bạn đã bao giờ nhầm đơn vị chưa?
+Cốc thay vì gam. Độ F thay vì độ C.
+Cái bánh xẹp lép. Bạn cười. Bạn gọi pizza.
+Giờ hãy tưởng tượng công thức đó là dành cho một chiếc máy bay.
+Và cái bánh là sáu mươi chín con người, ở độ cao mười hai cây số.
+Năm 1983, một chiếc Boeing 767 mới tinh hết nhiên liệu ở độ cao bốn mươi mốt nghìn feet.
+Không phải do rò rỉ.
+Mà do một con số nhỏ, ghi sai đơn vị.
+
+[PHÁ HIỂU LẦM + HỨA TRƯỚC]
+Ta hay nghĩ thảm họa nào cũng cần một kẻ có lỗi.
+Ai đó cẩu thả. Ai đó lười biếng. Một sai lầm lớn, ngớ ngẩn.
+Vụ này không có kẻ có lỗi.
+Chỉ có cả chục người cẩn thận, ai cũng làm đúng việc của mình, ai cũng tin vào con số trước mặt.
+Và thứ cứu mọi người không nằm trong cuốn sổ tay nào.
+Mà là những gì hai phi công tình cờ làm trong cuộc sống ngoài giờ làm việc.
+Một trong số đó liên quan đến một trường đua đầy những gia đình.
+
+[CHƯƠNG 1 — CHIẾC MÁY BAY MỚI]
+Ngày 23 tháng 7 năm 1983. Chuyến bay 143 của Air Canada, từ Montreal đi Edmonton.
+Máy bay là một chiếc Boeing 767, mới vài tháng tuổi. Đời mới nhất.
+Nó có màn hình kính thay cho đồng hồ kim kiểu cũ, và là máy bay đầu tiên trong đội bay của Air Canada đo nhiên liệu bằng kilôgam.
+Canada đang chuyển sang hệ mét.
+Phần còn lại của đội bay vẫn dùng pound.
+Chỉ riêng chuyện đó thì chưa thành vấn đề.
+Nhưng chiếc máy bay này còn một vấn đề thứ hai.
+Đồng hồ đo nhiên liệu của nó bị hỏng.
+Một linh kiện lỗi khiến máy tính không hiển thị được trong bồn còn bao nhiêu nhiên liệu.
+Có cách xoay xở. Tổ bay có thể đo bồn bằng tay, bằng một que đo, giống như kiểm tra dầu xe hơi, rồi tự làm phép tính.
+Và họ đã làm vậy.
+Hãy nhớ phép tính đó. Nó quan trọng.
+
+[CHƯƠNG 2 — CON SỐ]
+Nhiên liệu được đo bằng lít.
+Để ra khối lượng, tổ bay nhân với 1,77.
+Đó là số pound trên mỗi lít.
+Nhưng máy bay cần kilôgam.
+Con số đúng là khoảng 0,8.
+Không ai nhận ra.
+Không phải nhân viên tiếp nhiên liệu. Không phải thợ máy. Không phải các phi công, những người đã cùng nhau kiểm tra phép tính.
+Ai cũng đã làm phép tính này cả nghìn lần, bằng pound.
+Kết quả trông như một con số hoàn toàn bình thường.
+Máy bay cần 22.300 kilôgam nhiên liệu cho chuyến đi.
+Nó chỉ có khoảng 22.300 pound.
+Chưa tới một nửa.
+Họ còn dừng ở Ottawa giữa đường, đo lại, và mắc đúng sai lầm đó thêm lần nữa.
+Rồi họ cất cánh đi Edmonton.
+Máy tính bay, được nạp con số đó, báo rằng họ còn rất nhiều nhiên liệu.
+Rồi một đèn cảnh báo bật sáng.
+
+[CHƯƠNG 3 — IM LẶNG Ở ĐỘ CAO 41.000 FEET]
+Trên bầu trời phía bắc Ontario, buồng lái kêu bíp: áp suất nhiên liệu thấp, bên trái.
+Các phi công nghĩ là một cái bơm bị hỏng.
+Rồi bên phải cũng kêu.
+Họ quay hướng về Winnipeg.
+Động cơ trái tắt.
+Rồi vài phút sau, động cơ phải tắt.
+Buồng lái vang lên một tiếng "boong" kéo dài mà cả hai phi công chưa từng nghe bao giờ.
+Chưa ai từng nghe. Đó là chuông báo "tất cả động cơ đã tắt", và không ai nghĩ nó sẽ có ngày được dùng tới.
+Rồi những màn hình kính hiện đại tắt ngúm.
+Chúng chạy bằng điện từ động cơ.
+Các phi công chỉ còn lại vài đồng hồ dự phòng nhỏ, loại bạn thấy trên những chiếc máy bay cũ hơn nhiều.
+Một cánh quạt nhỏ thò ra từ bụng máy bay, tạo vừa đủ năng lượng để điều khiển.
+Sáu mươi mốt hành khách và tám thành viên tổ bay giờ đang ngồi trong một chiếc tàu lượn khổng lồ.
+Và cuốn sổ tay của 767 không có chương nào về bay lượn.
+
+[CHƯƠNG 4 — SỞ THÍCH VÀ KÝ ỨC]
+Đây là lúc vận may bắt đầu.
+Cơ trưởng Bob Pearson không chỉ là phi công hãng hàng không.
+Cuối tuần, ông lái tàu lượn. Những chiếc máy bay không hề có động cơ.
+Ông biết cách đọc không khí. Cách kéo dài quãng lượn.
+Cơ phó Maurice Quintal tính toán độ cao và quãng đường.
+Họ sẽ không tới được Winnipeg.
+Nhưng Quintal nhớ ra một điều.
+Nhiều năm trước, khi còn ở Không quân, anh từng đóng quân ở một sân bay nhỏ gần đó. Một nơi tên là Gimli.
+Điều anh không biết là đường băng cũ của Gimli đã bị biến thành trường đua xe.
+Và hôm đó là ngày hội gia đình.
+Xe hơi. Xe cắm trại. Theo nhiều lời kể, có cả trẻ con đạp xe gần đường băng.
+Máy bay tiếp cận quá cao và quá nhanh.
+Nên Pearson làm một việc không ai được phép làm với máy bay chở khách.
+Ông đánh cần lái theo hai hướng ngược nhau và cho chiếc phản lực bay nghiêng ngang, một mẹo của phi công tàu lượn, để hạ độ cao thật nhanh.
+Hành khách nhìn ra cửa sổ, thấy mặt đất nghiêng một góc kỳ lạ.
+Rồi càng đáp được thả xuống. Bánh mũi không khóa được.
+
+[CHƯƠNG 5 — CÚ HẠ CÁNH]
+Chiếc 767 chạm đường băng.
+Pearson đạp phanh mạnh đến mức nổ cả lốp.
+Bánh mũi gập lại, mũi máy bay cày dọc mặt bê tông, tóe lửa.
+Chính cú cày đó làm máy bay chậm lại nhanh hơn.
+Theo nhiều lời kể, nó dừng lại cách đám người trên trường đua chỉ vài trăm feet.
+Một đám cháy nhỏ bùng lên ở mũi.
+Những người dự ngày hội đua xe chạy tới với bình chữa cháy cầm tay và giúp dập lửa.
+Mọi người đều ra ngoài an toàn. Vài người bị thương khi trượt xuống bằng máng thoát hiểm. Không ai chết.
+Và sau đó?
+Ban đầu, các phi công bị đổ lỗi. Pearson bị giáng chức sáu tháng. Quintal bị đình chỉ hai tuần.
+Về sau, cuộc điều tra chỉ ra lỗi của cả hệ thống: việc chuyển sang hệ mét gây rối, đồng hồ nhiên liệu hỏng, quy định không rõ ràng về việc ai phải kiểm tra nhiên liệu.
+Hai phi công nhận một giải thưởng quốc tế cho tài nghệ bay xuất sắc.
+Còn chiếc máy bay? Nó được sửa và bay thêm hai mươi lăm năm nữa.
+Người ta gọi nó là Gimli Glider — "Tàu lượn Gimli".
+
+[KẾT]
+Giờ hãy nghĩ lại cái bánh hỏng.
+Sai đơn vị. Bánh xẹp. Pizza.
+Năm 1983, đúng kiểu sai lầm đó được mắc bởi những người cẩn thận, đã kiểm tra lại công việc của mình.
+Không quy định nào, không máy tính nào phát hiện ra.
+Nó được cứu bởi một người dành những ngày cuối tuần lái máy bay không động cơ,
+và một người khác nhớ ra một đường băng cũ từ công việc nhiều năm trước.
+Đôi khi kỹ năng quan trọng nhất của bạn không phải là thứ ghi trong CV.
+Vậy câu hỏi của mình là:
+ai nên chịu trách nhiệm cho Chuyến bay 143 — những người làm phép tính, hay hệ thống đã để một con số lọt qua mà không ai kiểm tra?
